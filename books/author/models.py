@@ -1,22 +1,21 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.db import models
+
+from api.managers import CustomUserManager
 
 
 class Author(AbstractUser):
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = [
+        'first_name',
+        'last_name',
+    ]
     email = models.EmailField(
         'Электронная почта',
         unique=True,
         blank=False,
         max_length=150,
         help_text='Введите вашу электронную почту',
-    )
-    username = models.CharField(
-        'Логин',
-        unique=True,
-        max_length=150,
-        help_text='Введите уникальный логин',
-        validators=[UnicodeUsernameValidator]
     )
     first_name = models.CharField(
         'Имя',
@@ -30,6 +29,7 @@ class Author(AbstractUser):
         blank=False,
         help_text='Введите вашу фамилию',
     )
+    objects = CustomUserManager()
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -37,4 +37,4 @@ class Author(AbstractUser):
         ordering = ('id',)
 
     def __str__(self):
-        return f'{self.username}, {self.email}'
+        return f'{self.first_name} {self.last_name}'

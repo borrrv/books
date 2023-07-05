@@ -28,6 +28,12 @@ class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
     permission_classes = (IsAuthorOrReadOnly,)
 
+    @action(detail=False, methods=['get'])
+    def not_archived(self, request):
+        books = Book.objects.filter(archived=False)
+        serializer = BookPubSerializer(books, many=True)
+        return Response(serializer.data)
+
     @action(detail=True, methods=['get'])
     def authors(self, request, pk=None):
         author = get_object_or_404(Author, pk=pk)
@@ -64,7 +70,7 @@ class BookViewSet(ModelViewSet):
         if request.method == 'POST':
             text = request.data['text']
             comment = Comment.objects.create(
-                author_id=user.id,
+                authors_id=user.id,
                 book=book,
                 text=text,
             )
@@ -82,7 +88,7 @@ class CommentViewSet(ModelViewSet):
 
     def get_queryset(self):
         user = self.request.user
-        return Comment.objects.filter(author=user)
+        return Comment.objects.filter(authors=user)
 
     def create(self, request, *args, **kwargs):
         return Response(status=HTTP_405_METHOD_NOT_ALLOWED)

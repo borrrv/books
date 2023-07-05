@@ -31,7 +31,7 @@ class Book(models.Model):
 
 class Comment(models.Model):
     """Модель комментариев"""
-    author = models.ForeignKey(
+    authors = models.ForeignKey(
         Author,
         on_delete=models.CASCADE,
         related_name='comment',
@@ -50,4 +50,4 @@ class Comment(models.Model):
         verbose_name_plural = 'Комментарии'
 
     def __str__(self):
-        return f"Комментарий {self.author} к книге {self.book}"
+        return f"Комментарий {self.authors} к книге {self.book}"

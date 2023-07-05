@@ -85,7 +85,21 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = (
-            'author',
+            'authors',
             'book',
             'text',
+        )
+
+
+class AuthorMeSerializer(serializers.ModelSerializer):
+    """Кастомный сериалайзер текущего пользователя"""
+    books = BookPubSerializer(read_only=True, many=True)
+
+    class Meta:
+        model = Author
+        fields = (
+            'id',
+            'first_name',
+            'last_name',
+            'books',
         )

@@ -33,11 +33,11 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = (
         'id',
         'text',
-        'author',
+        'authors',
         'book',
     )
     list_filter = (
-        'author',
+        'authors',
         'book',
     )
 

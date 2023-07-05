@@ -9,4 +9,5 @@ class IsAuthorOrReadOnly(BasePermission):
     def has_object_permission(self, request, view, obj):
         print(request.user.id)
         print(obj.authors.all())
-        return request.user in obj.authors.all() or request.method in SAFE_METHODS
+        return (request.user in obj.authors.all()
+                or request.method in SAFE_METHODS)

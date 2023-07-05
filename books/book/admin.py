@@ -8,6 +8,7 @@ class AuthorInline(admin.TabularInline):
 
 
 class BookAdmin(admin.ModelAdmin):
+    """Админка,связанная с книгами"""
 
     inlines = (AuthorInline,)
 
@@ -28,6 +29,7 @@ class BookAdmin(admin.ModelAdmin):
 
 
 class CommentAdmin(admin.ModelAdmin):
+    """Админка, связанная с комментариями"""
     list_display = (
         'id',
         'text',

@@ -4,6 +4,7 @@ from author.models import Author
 
 
 class Book(models.Model):
+    """Модель для книг"""
     title = models.CharField(
         max_length=150,
         unique=True,
@@ -29,6 +30,7 @@ class Book(models.Model):
 
 
 class Comment(models.Model):
+    """Модель комментариев"""
     author = models.ForeignKey(
         Author,
         on_delete=models.CASCADE,
@@ -37,7 +39,7 @@ class Comment(models.Model):
     book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
-        related_name='comment'
+        related_name='comment',
     )
     text = models.CharField(
         max_length=400,

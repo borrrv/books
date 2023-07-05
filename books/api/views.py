@@ -41,15 +41,20 @@ class BookViewSet(ModelViewSet):
         new_archived = bool(self.request.data['archived'])
         if archived:
             if archived.archived == new_archived:
-                content = {'message': f'Состояние не изменилось, осталось {new_archived}'}
+                content = {
+                    'message':
+                    f'Состояние не изменилось, осталось {new_archived}'
+                }
                 return Response(content, status=HTTP_400_BAD_REQUEST)
             else:
                 archived.archived = new_archived
                 archived.save()
-                content = {'message': f'Статус книги изменен на {new_archived}'}
+                content = {
+                    'message': f'Статус книги изменен на {new_archived}'
+                }
                 return Response(content, status=HTTP_202_ACCEPTED)
         else:
-            content = {"message": "Передайте обязательный параметр 'archived'."}
+            content = {"message": "Передайте обязательный параметр 'archived'"}
             return Response(content, status=HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['post'])
